@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: #050505;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-ivory font-serif antialiased;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+::selection {
+  background: #b8975a;
+  color: #050505;
+}
+
+:focus-visible {
+  outline: 2px solid #d6b672;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border px-5 py-2.5 text-base transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-gold { @apply border-gold bg-gold text-ink hover:bg-gold-bright hover:border-gold-bright; }
+  .btn-ghost { @apply border-charcoal-line bg-transparent text-ivory hover:border-gold hover:text-gold-bright; }
+  .btn-danger { @apply border-blood bg-transparent text-[#e08a8a] hover:bg-blood hover:text-ivory; }
+  .btn-sm { @apply px-3 py-1.5 text-sm; }
+
+  .field {
+    @apply w-full border border-charcoal-line bg-charcoal px-3 py-2 text-ivory placeholder:text-ivory-faint focus:border-gold focus:outline-none;
+  }
+  .field-label { @apply mb-1 block text-sm text-ivory-dim; }
+  .hint { @apply mt-1 text-sm text-ivory-faint; }
+
+  .chip {
+    @apply inline-block border border-charcoal-line px-2.5 py-0.5 text-sm text-ivory-dim transition-colors hover:border-gold hover:text-gold-bright;
+  }
+}
+
+/* Reading typography for article bodies */
+.reading {
+  font-size: 1.1875rem;
+  line-height: 1.9;
+  color: #e4dcc9;
+}
+.reading[lang='bn'] {
+  font-size: 1.25rem;
+  line-height: 2.15;
+}
+.reading p { margin: 0 0 1.35em; }
+.reading h2, .reading h3 {
+  font-family: var(--font-display), var(--font-bengali), Georgia, serif;
+  color: #ece4d2;
+  line-height: 1.25;
+  margin: 2.2em 0 0.7em;
+}
+.reading h2 { font-size: 1.85rem; }
+.reading h3 { font-size: 1.45rem; }
+.reading a { color: #d6b672; text-decoration: underline; text-underline-offset: 3px; }
+.reading em { color: #cfc6b0; }
+.reading blockquote {
+  margin: 1.8em 0;
+  padding-left: 1.25rem;
+  border-left: 1px solid #b8975a;
+  color: #bbb3a1;
+  font-style: italic;
+}
+.reading hr { border: 0; text-align: center; margin: 2.5em 0; }
+.reading hr::after { content: '\25C6'; color: #7d6740; font-size: 0.7rem; }
+.reading ul, .reading ol { margin: 0 0 1.35em 1.5rem; }
+.reading ul { list-style: disc; }
+.reading ol { list-style: decimal; }
+.reading img { max-width: 100%; height: auto; margin: 2em auto; }
+.reading code { background: #1b1a19; padding: 0.1em 0.35em; font-size: 0.9em; }
+.reading pre { background: #121212; padding: 1rem; overflow-x: auto; margin: 0 0 1.35em; }
+
+/* Poems: tighter stanza rhythm, centered measure, no drop cap */
+.reading-poem { font-size: 1.25rem; line-height: 1.85; }
+.reading-poem[lang='bn'] { line-height: 2.1; }
+.reading-poem p { margin: 0 0 1.6em; }
+
+/* Drop cap for English prose only */
+.reading-dropcap[lang='en'] > p:first-of-type::first-letter {
+  font-family: var(--font-display), Georgia, serif;
+  float: left;
+  font-size: 4.4rem;
+  line-height: 0.8;
+  padding: 0.35rem 0.6rem 0 0;
+  color: #b8975a;
+}
+
+/* One-time hero entrance */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.hero-rise { animation: hero-rise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.hero-rise-late { animation: hero-rise 1.1s 0.25s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
