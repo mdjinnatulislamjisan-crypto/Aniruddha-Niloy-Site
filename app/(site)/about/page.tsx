@@ -4,47 +4,114 @@ import { SITE } from '@/lib/site';
 import PageHeading from '@/components/PageHeading';
 
 export const metadata: Metadata = {
-  title: 'About the Author',
-  description: `About ${SITE.name}, author of Bengali and English poems, stories, novels and original mythological fiction.`,
+  title: 'লেখক পরিচিতি',
+  description: `${SITE.nameBn} — কবিতা, গল্প, উপন্যাস ও মৌলিক পৌরাণিক কাহিনির এক সাহিত্যিক পথচলা।`,
   alternates: { canonical: '/about' },
 };
 
-/* EDIT THIS PAGE: replace the placeholder biography below with your own words. */
 export default function AboutPage() {
   return (
     <div className="container-page pb-4">
-      <PageHeading title="About the Author" subtitle="লেখক পরিচিতি" />
+      <PageHeading
+        title="লেখক পরিচিতি"
+        subtitle="শব্দের আড়ালে যে মানুষ"
+      />
+
       <div className="grid gap-12 lg:grid-cols-[1fr_18rem]">
         <div className="reading max-w-reading">
           <p>
-            <strong>{SITE.name}</strong> ({SITE.nameBn}) writes poems, short stories, novels and original mythological
-            fiction in Bengali and English.
+            <strong>{SITE.nameBn}</strong> — শব্দের ভেতর অনুভূতি
+            খোঁজেন, নীরবতার মাঝে গল্প শোনেন, আর স্মৃতির
+            ধূসর পাতায় খুঁজে ফেরেন হারিয়ে যাওয়া মুহূর্তদের।
+            বাংলা ও ইংরেজি ভাষায় তাঁর লেখালেখির জগৎ গড়ে উঠেছে
+            মানুষের অনুভূতি, প্রেম, নিঃসঙ্গতা, বিষাদ, রহস্য
+            এবং কল্পনার নানা অলিগলি ঘিরে।
           </p>
+
           <p>
-            This is placeholder text. Open <code>app/(site)/about/page.tsx</code> in VS Code and replace these
-            paragraphs with your own biography: where you write from, what you read, and what draws you to
-            the dark, the quiet and the very old stories.
+            কবিতা, ছোটগল্প, উপন্যাস ও মৌলিক পৌরাণিক কাহিনি—
+            সাহিত্যের এই বিভিন্ন ধারায় নিজের ভাবনা ও কল্পনাকে
+            প্রকাশ করার চেষ্টা করেন তিনি। মানুষের মনের
+            অন্ধকার দিক, অব্যক্ত অনুভূতি, বিস্মৃত ইতিহাস
+            এবং বাস্তবতার আড়ালে লুকিয়ে থাকা রহস্য তাঁর
+            লেখার জগৎকে বিশেষভাবে আকর্ষণ করে।
           </p>
+
           <p>
-            New work appears here as it is finished. If a piece stays with you, a kind word or a share is the best
-            thing a reader can give.
+            তাঁর কাছে লেখালেখি কেবল কিছু শব্দকে বাক্যে
+            সাজিয়ে তোলা নয়; বরং এমন অনুভূতিকে ভাষা দেওয়া,
+            যা অনেক সময় মুখে বলা যায় না। কখনো একটি স্মৃতি,
+            কখনো কোনো অসমাপ্ত প্রশ্ন, কখনো একাকী রাতের
+            নীরবতা কিংবা মনের গভীরে জমে থাকা কোনো অনুভূতি
+            হয়ে ওঠে একটি নতুন লেখার সূচনা।
           </p>
+
           <p>
-            <Link href="/stories">Read the stories</Link>, <Link href="/poetry">wander through the poetry</Link>, or{' '}
-            <Link href="/search">search the whole archive</Link>.
+            প্রতিটি গল্পের পেছনে থাকে কোনো না কোনো অদেখা
+            জগৎ, প্রতিটি কবিতার ভেতরে লুকিয়ে থাকে কিছু
+            অব্যক্ত কথা। আর প্রতিটি চরিত্রের মধ্যে তিনি
+            খুঁজে ফেরেন মানুষের বহুমাত্রিক সত্তাকে—
+            যেখানে আলো ও অন্ধকার, ভালোবাসা ও ঘৃণা,
+            সত্য ও কল্পনা পাশাপাশি অবস্থান করে।
+          </p>
+
+          <p>
+            এই ওয়েবসাইট তাঁর নিজস্ব সাহিত্যিক পরিসর।
+            এখানে ধীরে ধীরে স্থান পাবে মৌলিক কবিতা,
+            গল্প, উপন্যাস এবং কল্পনার জগৎ থেকে উঠে আসা
+            নানা আখ্যান। এটি কেবল প্রকাশিত লেখার
+            সংগ্রহশালা নয়; বরং একজন লেখকের ভাবনা,
+            সৃজনশীলতা ও সাহিত্যিক যাত্রার চলমান দলিল।
+          </p>
+
+          <p>
+            তাঁর লেখকজীবনের পথচলা এখনো চলমান। সামনে
+            অপেক্ষা করছে অসংখ্য অপ্রকাশিত ভাবনা, অজানা
+            চরিত্র, অসমাপ্ত কাহিনি এবং শব্দে রূপ পাওয়ার
+            অপেক্ষায় থাকা অনেক অনুভূতি। সময়ের সঙ্গে
+            সঙ্গে এই সাহিত্যিক জগৎ আরও বিস্তৃত হবে—
+            নতুন লেখা, নতুন ভাবনা ও নতুন কাহিনির মধ্য দিয়ে।
+          </p>
+
+          <p>
+            কোনো কবিতার কয়েকটি পঙ্‌ক্তি যদি পাঠকের মনে
+            থেকে যায়, কোনো গল্প যদি তাঁকে নিজের অজানা
+            অনুভূতির মুখোমুখি দাঁড় করায়, কিংবা কোনো
+            বাক্যে যদি তিনি খুঁজে পান নিজের জীবনের
+            প্রতিচ্ছবি—তবে সেই লেখার সার্থকতা সেখানেই।
+          </p>
+
+          <p>
+            <Link href="/stories">গল্পের জগতে প্রবেশ করুন</Link>,{' '}
+            <Link href="/poetry">কবিতার পাতায় ঘুরে আসুন</Link>, অথবা{' '}
+            <Link href="/search">সংগ্রহশালায় খুঁজুন আপনার পছন্দের লেখা</Link>।
           </p>
         </div>
 
         <aside className="h-fit border border-charcoal-line bg-charcoal p-6">
-          <h2 className="font-display text-2xl text-ivory">Find me elsewhere</h2>
+          <h2 className="font-display text-2xl text-ivory">
+            অন্যান্য মাধ্যমে
+          </h2>
+
           <ul className="mt-4 space-y-2">
             <li>
-              <a className="text-gold-bright hover:underline" href={SITE.facebook} target="_blank" rel="noopener noreferrer">
+              <a
+                className="text-gold-bright hover:underline"
+                href={SITE.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Facebook
               </a>
             </li>
+
             <li>
-              <a className="text-gold-bright hover:underline" href={SITE.instagram} target="_blank" rel="noopener noreferrer">
+              <a
+                className="text-gold-bright hover:underline"
+                href={SITE.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Instagram
               </a>
             </li>
