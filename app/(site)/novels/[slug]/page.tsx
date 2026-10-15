@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getArticle, getChapters } from '@/lib/data';
+import { getArticle, getChapters, listRelated } from '@/lib/data';
 import { articleMetadata } from '@/lib/seo';
 import { articlePath, formatDate, safeDecode } from '@/lib/utils';
 import ArticleView from '@/components/ArticleView';
@@ -19,11 +19,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function NovelPage({ params }: Props) {
   const novel = await getArticle('novel', safeDecode(params.slug));
   if (!novel) notFound();
-  const chapters = await getChapters(novel.id);
+  const [chapters, related] = await Promise.all([getChapters(novel.id), listRelated(novel, 3)]);
   const base = `/novels/${encodeURIComponent(novel.slug)}`;
 
   return (
-    <ArticleView article={novel} backHref="/novels" backLabel="All novels">
+    <ArticleView article={novel} backHref="/novels" backLabel="All novels" related={related} relatedTitle="More to read">
       <section className="mt-10" aria-labelledby="chapters-heading">
         <h2 id="chapters-heading" className="font-display text-3xl text-ivory">
           Chapters

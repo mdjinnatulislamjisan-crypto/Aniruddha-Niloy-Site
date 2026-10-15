@@ -30,6 +30,7 @@ export interface ListOptions {
   q?: string;
   limit?: number;
   excludeId?: string;
+  sort?: 'newest' | 'oldest';
 }
 
 export function listArticles(opts: ListOptions = {}): Promise<Article[]> {
@@ -39,8 +40,9 @@ export function listArticles(opts: ListOptions = {}): Promise<Article[]> {
 
     if (opts.tagId) {
       const { data } = await supabase.from('article_tags').select('article_id').eq('tag_id', opts.tagId);
-      ids = (data ?? []).map((r) => r.article_id as string);
-      if (ids.length === 0) return [];
+      const found: string[] = (data ?? []).map((r: { article_id: string }) => r.article_id);
+      if (found.length === 0) return [];
+      ids = found;
     }
 
     let query = supabase
@@ -49,7 +51,7 @@ export function listArticles(opts: ListOptions = {}): Promise<Article[]> {
       .eq('status', 'published')
       .in('type', opts.types ?? LISTABLE)
       .is('parent_id', null)
-      .order('published_at', { ascending: false })
+      .order('published_at', { ascending: opts.sort === 'oldest' })
       .limit(opts.limit ?? 60);
 
     if (ids) query = query.in('id', ids);
@@ -151,6 +153,38 @@ export function getTagBySlug(slug: string): Promise<Tag | null> {
     const { data } = await createPublicClient().from('tags').select('*').eq('slug', slug).maybeSingle();
     return (data as Tag) ?? null;
   }, null);
+}
+
+/**
+ * Related writings: same category first, then same type, newest first.
+ * Never includes the article itself.
+ */
+export function listRelated(article: Article, limit = 3): Promise<Article[]> {
+  return safe(async () => {
+    const picked: Article[] = [];
+    const seen = new Set<string>([article.id]);
+    const baseType: ArticleType[] = article.type === 'chapter' ? ['novel'] : [article.type];
+
+    if (article.category_id) {
+      const sameCategory = await listArticles({ categoryId: article.category_id, limit: limit + 2, excludeId: article.id });
+      for (const a of sameCategory) {
+        if (!seen.has(a.id) && picked.length < limit) {
+          picked.push(a);
+          seen.add(a.id);
+        }
+      }
+    }
+    if (picked.length < limit) {
+      const sameType = await listArticles({ types: baseType, limit: limit + 3, excludeId: article.id });
+      for (const a of sameType) {
+        if (!seen.has(a.id) && picked.length < limit) {
+          picked.push(a);
+          seen.add(a.id);
+        }
+      }
+    }
+    return picked;
+  }, []);
 }
 
 /** Everything published, for the sitemap. */

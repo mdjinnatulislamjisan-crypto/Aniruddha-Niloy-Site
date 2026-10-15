@@ -17,7 +17,7 @@ export default async function EditArticlePage({ params }: { params: { id: string
   const [cats, tags, novels, links] = await Promise.all([
     supabase.from('categories').select('id, name, slug').order('name'),
     supabase.from('tags').select('id, name, slug').order('name'),
-    supabase.from('articles').select('id, title').eq('type', 'novel').order('title'),
+    supabase.from('articles').select('id, title, slug').eq('type', 'novel').order('title'),
     supabase.from('article_tags').select('tag_id').eq('article_id', params.id),
   ]);
 

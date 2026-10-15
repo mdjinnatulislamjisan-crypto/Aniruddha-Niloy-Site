@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getArticle, listArticles } from '@/lib/data';
+import { getArticle, listRelated } from '@/lib/data';
 import { SECTIONS } from '@/lib/site';
 import { articleMetadata } from '@/lib/seo';
 import { articlePath, safeDecode } from '@/lib/utils';
 import ArticleView from '@/components/ArticleView';
-import ArticleGrid from '@/components/ArticleGrid';
 
 export const revalidate = 60;
 
@@ -26,19 +25,15 @@ export default async function ArticlePage({ params }: Props) {
   const article = await getArticle(section.type, safeDecode(params.slug));
   if (!article) notFound();
 
-  const more = await listArticles({ types: [section.type], limit: 3, excludeId: article.id });
+  const related = await listRelated(article, 3);
 
   return (
-    <>
-      <ArticleView article={article} backHref={`/${params.section}`} backLabel={`All ${section.title.toLowerCase()}`} />
-      {more.length > 0 && (
-        <section className="container-page mt-20">
-          <h2 className="font-display text-3xl text-ivory">More {section.title.toLowerCase()}</h2>
-          <div className="mt-6">
-            <ArticleGrid articles={more} />
-          </div>
-        </section>
-      )}
-    </>
+    <ArticleView
+      article={article}
+      backHref={`/${params.section}`}
+      backLabel={`All ${section.title.toLowerCase()}`}
+      related={related}
+      relatedTitle="Continue reading"
+    />
   );
 }

@@ -21,6 +21,7 @@ export interface AdminRow {
   published_at: string | null;
   category_name: string | null;
   tag_names: string[];
+  live_path: string | null;
 }
 
 export default function ArticleTable({ rows: initial }: { rows: AdminRow[] }) {
@@ -131,6 +132,9 @@ export default function ArticleTable({ rows: initial }: { rows: AdminRow[] }) {
               </div>
               <div className="flex shrink-0 flex-wrap gap-2">
                 <Link href={`/admin/articles/${r.id}`} className="btn btn-ghost btn-sm">Edit</Link>
+                {r.status === 'published' && r.live_path && (
+                  <Link href={r.live_path} target="_blank" className="btn btn-ghost btn-sm">View</Link>
+                )}
                 <button type="button" className="btn btn-ghost btn-sm" onClick={() => togglePublish(r)}>
                   {r.status === 'published' ? 'Unpublish' : 'Publish'}
                 </button>

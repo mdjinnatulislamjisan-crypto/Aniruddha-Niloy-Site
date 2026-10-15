@@ -1,37 +1,19 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Newsreader, Noto_Serif_Bengali } from 'next/font/google';
-import { SITE } from '@/lib/site';
+import { SITE, isRealLink } from '@/lib/site';
+import { READER_BOOT_SCRIPT } from '@/lib/reader-prefs';
+import JsonLd from '@/components/JsonLd';
 import './globals.css';
-
-const display = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-display',
-  display: 'swap',
-});
-
-const body = Newsreader({
-  subsets: ['latin'],
-  style: ['normal', 'italic'],
-  variable: '--font-body',
-  display: 'swap',
-});
-
-const bengali = Noto_Serif_Bengali({
-  subsets: ['bengali', 'latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-bengali',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} | Author of poems, stories and myths`,
+    default: `${SITE.name} (${SITE.nameBn}) | Poems, stories and myths`,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
+  applicationName: SITE.name,
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
   openGraph: {
     type: 'website',
     siteName: SITE.name,
@@ -39,9 +21,11 @@ export const metadata: Metadata = {
     description: SITE.description,
     url: SITE.url,
     locale: 'en_GB',
+    alternateLocale: ['bn_BD'],
   },
   twitter: { card: 'summary_large_image', title: SITE.name, description: SITE.description },
   alternates: { canonical: '/' },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
@@ -50,10 +34,50 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+// Fonts are loaded with a <link> tag (more reliable than build-time download on some hosts).
+const FONTS_URL =
+  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Bengali:wght@400;500;700&display=swap';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const sameAs = [SITE.facebook, SITE.instagram].filter(isRealLink);
+
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${bengali.variable}`}>
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href={FONTS_URL} />
+        <script dangerouslySetInnerHTML={{ __html: READER_BOOT_SCRIPT }} />
+      </head>
+      <body>
+        {children}
+        <JsonLd
+          data={[
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: SITE.name,
+              alternateName: SITE.nameBn,
+              url: SITE.url,
+              jobTitle: 'Author',
+              ...(sameAs.length ? { sameAs } : {}),
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: SITE.name,
+              alternateName: SITE.nameBn,
+              url: SITE.url,
+              inLanguage: ['en', 'bn'],
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: `${SITE.url}/search?q={search_term_string}`,
+                'query-input': 'required name=search_term_string',
+              },
+            },
+          ]}
+        />
+      </body>
     </html>
   );
 }

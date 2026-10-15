@@ -22,7 +22,8 @@ export default async function ChapterPage({ params }: Props) {
   const view = await getChapterView(safeDecode(params.slug), safeDecode(params.chapter));
   if (!view) notFound();
 
-  const { novel, chapter, prev, next } = view;
+  const { novel, chapter, chapters, prev, next } = view;
+  const position = chapters.findIndex((c) => c.id === chapter.id) + 1;
   const base = `/novels/${encodeURIComponent(novel.slug)}`;
   const path = (slug: string) => `${base}/${encodeURIComponent(slug)}`;
 
@@ -34,7 +35,12 @@ export default async function ChapterPage({ params }: Props) {
       parentTitle={novel.title}
       shareUrl={absoluteUrl(path(chapter.slug))}
       footer={
-        <nav aria-label="Chapter navigation" className="mt-10 grid grid-cols-2 gap-4 border-t border-charcoal-line pt-6">
+        <nav aria-label="Chapter navigation" className="mt-10 border-t border-charcoal-line pt-6">
+          <p className="mb-4 text-center text-sm text-ivory-faint">
+            Chapter {position} of {chapters.length} -{' '}
+            <Link href={base} className="underline hover:text-gold-bright">all chapters</Link>
+          </p>
+          <div className="grid grid-cols-2 gap-4">
           <div>
             {prev && (
               <Link href={path(prev.slug)} className="group block">
@@ -59,6 +65,7 @@ export default async function ChapterPage({ params }: Props) {
                 <span className="block font-display text-xl text-ivory group-hover:text-gold-bright">Back to {novel.title}</span>
               </Link>
             )}
+          </div>
           </div>
         </nav>
       }

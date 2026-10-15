@@ -8,7 +8,7 @@ export default async function NewArticlePage() {
   const [cats, tags, novels] = await Promise.all([
     supabase.from('categories').select('id, name, slug').order('name'),
     supabase.from('tags').select('id, name, slug').order('name'),
-    supabase.from('articles').select('id, title').eq('type', 'novel').order('title'),
+    supabase.from('articles').select('id, title, slug').eq('type', 'novel').order('title'),
   ]);
 
   return (

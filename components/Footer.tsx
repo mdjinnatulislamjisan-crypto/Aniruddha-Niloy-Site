@@ -2,29 +2,42 @@ import Link from 'next/link';
 import { SITE } from '@/lib/site';
 import Ornament from './Ornament';
 
+const linkCls = 'text-ivory-dim transition-colors hover:text-gold-bright';
+
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-charcoal-line bg-charcoal/40">
-      <div className="container-page py-12">
-        <Ornament className="mb-10" />
-        <div className="grid gap-10 md:grid-cols-3">
+    <footer className="mt-28 border-t border-charcoal-line bg-charcoal/40">
+      <div className="container-page py-14">
+        <Ornament className="mb-12" />
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <p className="font-display text-2xl text-ivory">{SITE.name}</p>
-            <p className="font-display text-lg text-gold">{SITE.nameBn}</p>
+            <p className="font-display text-3xl text-ivory">{SITE.name}</p>
+            <p className="font-display text-xl text-gold" lang="bn">{SITE.nameBn}</p>
             <p className="mt-3 max-w-xs text-base text-ivory-faint">{SITE.tagline}</p>
           </div>
-          <nav aria-label="Footer">
-            <ul className="space-y-1.5 text-base">
-              <li><Link className="text-ivory-dim hover:text-gold-bright" href="/stories">Stories</Link></li>
-              <li><Link className="text-ivory-dim hover:text-gold-bright" href="/poetry">Poetry</Link></li>
-              <li><Link className="text-ivory-dim hover:text-gold-bright" href="/mythology">Mythology</Link></li>
-              <li><Link className="text-ivory-dim hover:text-gold-bright" href="/novels">Novels</Link></li>
-              <li><Link className="text-ivory-dim hover:text-gold-bright" href="/search">Search and categories</Link></li>
+
+          <nav aria-label="Read">
+            <p className="font-display text-xl text-ivory">Read</p>
+            <ul className="mt-3 space-y-1.5 text-base">
+              <li><Link className={linkCls} href="/stories">Stories</Link></li>
+              <li><Link className={linkCls} href="/poetry">Poetry</Link></li>
+              <li><Link className={linkCls} href="/mythology">Mythology</Link></li>
+              <li><Link className={linkCls} href="/novels">Novels</Link></li>
             </ul>
           </nav>
+
+          <nav aria-label="Explore">
+            <p className="font-display text-xl text-ivory">Explore</p>
+            <ul className="mt-3 space-y-1.5 text-base">
+              <li><Link className={linkCls} href="/search">Search and categories</Link></li>
+              <li><Link className={linkCls} href="/bookmarks">Saved writings</Link></li>
+              <li><Link className={linkCls} href="/about">About the author</Link></li>
+            </ul>
+          </nav>
+
           <div>
-            <p className="text-ivory-dim">Follow</p>
-            <ul className="mt-2 space-y-1.5 text-base">
+            <p className="font-display text-xl text-ivory">Follow</p>
+            <ul className="mt-3 space-y-1.5 text-base">
               <li>
                 <a className="text-ivory hover:text-gold-bright" href={SITE.facebook} target="_blank" rel="noopener noreferrer">
                   Facebook
@@ -38,7 +51,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <p className="mt-10 text-sm text-ivory-faint">
+        <p className="mt-12 border-t border-charcoal-line pt-6 text-sm text-ivory-faint">
           &copy; {new Date().getFullYear()} {SITE.name}. All writing on this site is protected by copyright.
         </p>
       </div>

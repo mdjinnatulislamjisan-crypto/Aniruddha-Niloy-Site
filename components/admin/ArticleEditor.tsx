@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { revalidateSite } from '@/lib/revalidate';
 import { TYPE_LABEL, TYPE_PATH } from '@/lib/site';
@@ -12,7 +12,7 @@ import ArticleBody from '@/components/ArticleBody';
 import ConfirmDialog from './ConfirmDialog';
 
 interface Option { id: string; name: string; slug: string }
-interface NovelOption { id: string; title: string }
+interface NovelOption { id: string; title: string; slug: string }
 
 export default function ArticleEditor({
   article,
@@ -56,6 +56,26 @@ export default function ArticleEditor({
   const [message, setMessage] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null);
 
   const isChapter = type === 'chapter';
+
+  // ---- unsaved-changes guard ----
+  const current = JSON.stringify([
+    title, slug, type, language, excerpt, content, cover, seoTitle, seoDesc,
+    categoryId, parentId, chapterNo, [...selectedTags].sort().join(','), newTags,
+  ]);
+  const [baseline, setBaseline] = useState(current);
+  const dirty = current !== baseline;
+
+  useEffect(() => {
+    if (!dirty) return;
+    const warn = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', warn);
+    return () => window.removeEventListener('beforeunload', warn);
+  }, [dirty]);
+
+  const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
 
   function onTitle(v: string) {
     setTitle(v);
@@ -169,6 +189,12 @@ export default function ArticleEditor({
       setPublishedAt(nextPublishedAt);
       setSelectedTags(ids);
       setNewTags('');
+      setBaseline(
+        JSON.stringify([
+          title, finalSlug, type, language, excerpt, content, cover, seoTitle, seoDesc,
+          categoryId, parentId, chapterNo, [...ids].sort().join(','), '',
+        ])
+      );
       setMessage({
         kind: 'ok',
         text: nextStatus === 'published' ? 'Published. Your article is live.' : status === 'published' ? 'Unpublished. The article is now a draft.' : 'Draft saved.',
@@ -203,7 +229,8 @@ export default function ArticleEditor({
   const liveHref = (() => {
     if (!id || status !== 'published' || !slug) return null;
     if (isChapter) {
-      return null; // chapter URLs depend on the parent novel slug; open from the novel page
+      const novel = novels.find((n) => n.id === parentId);
+      return novel ? `/novels/${encodeURIComponent(novel.slug)}/${encodeURIComponent(slug)}` : null;
     }
     return `${TYPE_PATH[type]}/${encodeURIComponent(slug)}`;
   })();
@@ -235,7 +262,7 @@ export default function ArticleEditor({
 
         <div>
           <div className="mb-2 flex items-end justify-between">
-            <span className="field-label !mb-0">Content (Markdown)</span>
+            <span className="field-label !mb-0">Content (Markdown){dirty && <span className="ml-2 text-gold-bright">- unsaved</span>}</span>
             <div className="flex gap-1" role="tablist" aria-label="Editor mode">
               <button type="button" role="tab" aria-selected={tab === 'write'} className={`btn btn-sm ${tab === 'write' ? 'btn-gold' : 'btn-ghost'}`} onClick={() => setTab('write')}>Write</button>
               <button type="button" role="tab" aria-selected={tab === 'preview'} className={`btn btn-sm ${tab === 'preview' ? 'btn-gold' : 'btn-ghost'}`} onClick={() => setTab('preview')}>Preview</button>
@@ -254,20 +281,20 @@ export default function ArticleEditor({
                 placeholder="Write here. Blank line = new paragraph. For poems, each new line stays a new line."
               />
               <p className="hint">
-                Markdown: <code>**bold**</code>, <code>*italic*</code>, <code>## Heading</code>, <code>&gt; quote</code>, <code>---</code> divider.
+                {wordCount} words{dirty ? ' - unsaved changes' : ''}. Markdown: <code>**bold**</code>, <code>*italic*</code>, <code>## Heading</code>, <code>&gt; quote</code>, <code>---</code> divider.
               </p>
             </>
           ) : (
-            <div className="border border-charcoal-line bg-ink p-6">
+            <div className="reader-surface p-6 sm:p-10">
               {cover && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={cover} alt="" className="mb-6 max-h-72 w-full object-cover" />
               )}
-              <h2 className="mb-6 font-display text-4xl text-ivory" lang={language}>{title || 'Untitled'}</h2>
+              <h2 className="mb-6 font-display text-4xl" style={{ color: 'var(--reader-fg)' }} lang={language}>{title || 'Untitled'}</h2>
               {content.trim() ? (
                 <ArticleBody content={content} type={type} language={language} />
               ) : (
-                <p className="text-ivory-faint">Nothing to preview yet.</p>
+                <p style={{ color: 'var(--reader-muted)' }}>Nothing to preview yet.</p>
               )}
             </div>
           )}
