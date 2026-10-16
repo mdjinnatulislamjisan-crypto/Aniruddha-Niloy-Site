@@ -11,11 +11,11 @@ export default function Header() {
           <span className="font-display text-2xl font-medium tracking-wide text-ivory transition-colors group-hover:text-gold-bright">
             {SITE.name}
           </span>
-          <span className="hidden font-display text-lg text-gold-dim transition-colors group-hover:text-gold sm:inline" lang="bn">
+          <span className="hidden font-display text-lg text-gold-dim transition-colors group-hover:text-gold xl:inline" lang="bn">
             {SITE.nameBn}
           </span>
         </Link>
-        <nav aria-label="Main" className="hidden md:block">
+        <nav aria-label="Main" className="hidden lg:block">
           <NavLinks />
         </nav>
         <MobileNav />

@@ -80,12 +80,21 @@ export const SECTIONS: Record<
   },
 };
 
+/** Extra reading section, built from a category (no database change needed). */
+export const PHILOSOPHY = {
+  slug: 'psychological-philosophical', // category slug created by supabase/add_philosophy_category.sql
+  title: 'Psychological and Philosophical Literature',
+  titleBn: 'মনস্তাত্ত্বিক ও দার্শনিক সাহিত্য',
+  path: '/philosophy',
+};
+
 export const NAV = [
   { href: '/', label: 'Home' },
   { href: '/stories', label: 'Stories' },
   { href: '/poetry', label: 'Poetry' },
   { href: '/mythology', label: 'Mythology' },
   { href: '/novels', label: 'Novels' },
+  { href: '/philosophy', label: 'Philosophy' },
   { href: '/about', label: 'About' },
   { href: '/search', label: 'Search' },
   { href: '/bookmarks', label: 'Saved' },

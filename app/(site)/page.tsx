@@ -14,6 +14,7 @@ const DOORS = [
   { href: '/poetry', title: 'Poetry', bn: 'কবিতা', text: 'Verses for late hours, in Bengali and English.' },
   { href: '/mythology', title: 'Mythology', bn: 'পুরাণ', text: 'Invented gods, old rivers, unfinished wars.' },
   { href: '/novels', title: 'Novels', bn: 'উপন্যাস', text: 'Longer worlds, released one chapter at a time.' },
+  { href: '/philosophy', title: 'Philosophy', bn: 'মনস্তাত্ত্বিক ও দার্শনিক সাহিত্য', text: 'Psychological and philosophical literature.' },
 ];
 
 function SectionHead({ title, bn, href }: { title: string; bn: string; href: string }) {

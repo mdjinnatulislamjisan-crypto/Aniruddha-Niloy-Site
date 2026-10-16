@@ -16,7 +16,7 @@ export default function NavLinks() {
   const { items, ready } = useBookmarks();
 
   return (
-    <ul className="flex items-center gap-6 text-base">
+    <ul className="flex items-center gap-5 text-base">
       {NAV.filter((n) => n.href !== '/').map((item) => {
         const active = isActive(pathname, item.href);
         return (

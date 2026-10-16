@@ -23,6 +23,7 @@ export default function Footer() {
               <li><Link className={linkCls} href="/poetry">Poetry</Link></li>
               <li><Link className={linkCls} href="/mythology">Mythology</Link></li>
               <li><Link className={linkCls} href="/novels">Novels</Link></li>
+              <li><Link className={linkCls} href="/philosophy" lang="bn">মনস্তাত্ত্বিক ও দার্শনিক সাহিত্য</Link></li>
             </ul>
           </nav>
 
