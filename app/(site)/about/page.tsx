@@ -7,8 +7,10 @@ import PageHeading from '@/components/PageHeading';
 export const metadata: Metadata = {
   title: 'About the Author | লেখক পরিচিতি',
   description:
-    'Discover Aniruddha Niloy, a Bengali writer and poet exploring human emotions, philosophy, solitude, love, and the hidden depths of human existence. অনিরুদ্ধ নিলয়ের সাহিত্যজগৎ ও লেখক পরিচিতি।',
-  alternates: { canonical: '/about' },
+    'Meet Aniruddha Niloy, a Bengali writer and poet exploring human emotions, philosophy, solitude, love, and the mysteries of human existence. অনিরুদ্ধ নিলয়ের সাহিত্যভুবনে স্বাগতম।',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function AboutPage() {
@@ -21,9 +23,7 @@ export default function AboutPage() {
 
       <div className="grid gap-12 lg:grid-cols-[1fr_18rem]">
         <div className="reading max-w-reading">
-
           {/* English Biography */}
-
           <section lang="en">
             <h2 className="font-display text-2xl text-ivory">
               The Writer Behind the Words
@@ -32,11 +32,11 @@ export default function AboutPage() {
             <p>
               <strong>{SITE.name}</strong> is a Bengali writer and poet
               whose literary interests revolve around human emotions,
-              philosophy, psychology, and the intricate realities of
-              existence. Through poetry, short stories, novels, and
-              reflective prose, his work explores the unspoken thoughts
-              and hidden feelings that often remain buried beneath
-              the surface of everyday life.
+              philosophy, psychology, and the complexities of existence.
+              Through poetry, short stories, novels, and reflective
+              prose, his writing explores the unspoken thoughts and
+              hidden feelings that often remain beneath the surface
+              of everyday life.
             </p>
 
             <p>
@@ -44,28 +44,26 @@ export default function AboutPage() {
               hope and despair are recurring themes in his creative
               world. He is drawn to the contradictions within human
               nature, the distance between what people feel and what
-              they reveal, and the quiet struggles that shape their
-              lives.
+              they reveal, and the quiet struggles that shape their lives.
             </p>
 
             <p>
               For Aniruddha Niloy, writing is more than the arrangement
               of words. It is a way of questioning familiar truths,
-              examining the human condition, and giving expression
-              to thoughts that are difficult to articulate. A poem
-              may hold an entire lifetime of sorrow, while a story
-              may reveal a truth that its characters cannot bring
-              themselves to acknowledge.
+              examining the human condition, and expressing thoughts
+              that are difficult to articulate. A poem may hold a
+              lifetime of sorrow, while a story may reveal a truth
+              its characters cannot bring themselves to acknowledge.
             </p>
 
             <p>
               Inspired by the richness of Bengali literary tradition
-              and an enduring interest in philosophical thought,
-              his creative vision seeks to bring together emotional
-              depth, imagination, and a distinctive literary voice.
-              His writing moves between tenderness and darkness,
-              reality and imagination, and the beauty of what remains
-              and the ache of what has been lost.
+              and an enduring interest in philosophical thought, his
+              creative vision brings together emotional depth,
+              imagination, and a distinctive literary voice. His
+              writing moves between tenderness and darkness, reality
+              and imagination, and the beauty of what remains and
+              the ache of what has been lost.
             </p>
 
             <p>
@@ -89,14 +87,13 @@ export default function AboutPage() {
               Words may disappear from a page, but their meaning can
               remain within a person for years. Through his writing,
               Aniruddha Niloy seeks to create works that linger in
-              the mind, awaken forgotten feelings, and offer readers
-              a moment of recognition within the experiences of
-              others.
+              the mind, awaken forgotten feelings, and help readers
+              discover something of themselves within the experiences
+              of others.
             </p>
           </section>
 
           {/* Bengali Biography */}
-
           <section lang="bn" className="mt-12">
             <h2 className="font-display text-2xl text-ivory">
               শব্দের আড়ালে যে লেখক
@@ -119,7 +116,7 @@ export default function AboutPage() {
               অন্যতম অনুষঙ্গ। মানুষের অন্তর্লীন দ্বন্দ্ব,
               অনুভূতি ও প্রকাশের মধ্যকার দূরত্ব এবং জীবনের
               নেপথ্যে চলতে থাকা নীরব সংগ্রাম তাঁর
-              সৃষ্টিশীল ভাবনাকে গভীরভাবে প্রভাবিত করে।
+              সৃষ্টিশীল ভাবনাকে প্রভাবিত করে।
             </p>
 
             <p>
@@ -131,7 +128,7 @@ export default function AboutPage() {
               কয়েকটি পঙ্‌ক্তিতে জমা হয় দীর্ঘ জীবনের
               বিষাদ, আবার কখনো একটি গল্পের আড়ালে
               প্রকাশ পায় এমন কোনো সত্য, যার মুখোমুখি
-              হতে চরিত্রগুলো নিজেরাই দ্বিধাগ্রস্ত।
+              হতে মানুষ নিজেই দ্বিধাগ্রস্ত।
             </p>
 
             <p>
@@ -180,18 +177,21 @@ export default function AboutPage() {
             </p>
           </section>
 
-          {/* Literary Archive Links */}
-
+          {/* Literary Archive Navigation */}
           <div className="mt-10 border-t border-charcoal-line pt-6">
-            <p>
-              <Link href="/stories">Read the stories</Link>
+            <h2 className="font-display text-xl text-ivory">
+              Explore the Literary World
+            </h2>
+
+            <p className="mt-4">
+              <Link href="/stories">Read the Stories</Link>
               {' · '}
-              <Link href="/poetry">Explore the poetry</Link>
+              <Link href="/poetry">Explore the Poetry</Link>
               {' · '}
-              <Link href="/search">Search the literary archive</Link>
+              <Link href="/search">Search the Archive</Link>
             </p>
 
-            <p className="mt-2 text-sm">
+            <p className="mt-3 text-sm">
               <Link href="/stories">গল্প পড়ুন</Link>
               {' · '}
               <Link href="/poetry">কবিতা পড়ুন</Link>
@@ -202,7 +202,6 @@ export default function AboutPage() {
         </div>
 
         {/* Social Links */}
-
         <aside className="h-fit border border-charcoal-line bg-charcoal p-6">
           <h2 className="font-display text-2xl text-ivory">
             Connect With the Writer
@@ -210,12 +209,12 @@ export default function AboutPage() {
 
           <p className="mt-3 text-sm leading-7 text-ivory/70">
             Follow Aniruddha Niloy for literary updates, original
-            writing, poems, and new creative works.
+            writing, poems, stories, and new creative works.
           </p>
 
           <p className="mt-3 text-sm leading-7 text-ivory/70">
-            নতুন লেখা, কবিতা ও সাহিত্যিক প্রকাশনার খবর পেতে
-            অনিরুদ্ধ নিলয়ের সঙ্গে যুক্ত থাকুন।
+            নতুন লেখা, কবিতা, গল্প ও সাহিত্যিক প্রকাশনার খবর
+            পেতে অনিরুদ্ধ নিলয়ের সঙ্গে যুক্ত থাকুন।
           </p>
 
           <ul className="mt-4 space-y-3">
